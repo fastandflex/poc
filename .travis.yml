@@ -1,24 +1,29 @@
 language: php
-
 php:
-  - 5.6
-
+- 5.6
 env:
   global:
-    - setup=basic
-    - APP_ENV=staging
-    - APP_DEBUG=true
-    - APP_KEY=xxxx
-    - DB_CONNECTION=sqlite
-    - CACHE_DRIVER=file
-    - SESSION_DRIVER=file
-    - QUEUE_DRIVER=sync
-
+  - setup=basic
+  - APP_ENV=staging
+  - APP_DEBUG=true
+  - APP_KEY=xxxx
+  - DB_CONNECTION=sqlite
+  - CACHE_DRIVER=file
+  - SESSION_DRIVER=file
+  - QUEUE_DRIVER=sync
 sudo: false
-
 install:
-- if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-source; fi
-- if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-stable; fi
-- if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-lowest --prefer-stable; fi
-
+- if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-source;
+  fi
+- if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-source --no-interaction
+  --prefer-stable; fi
+- if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-source --no-interaction
+  --prefer-lowest --prefer-stable; fi
 script: vendor/bin/phpunit
+deploy:
+  provider: azure_web_apps
+  username:
+    secure: PUKpyAwc8pRnvh35gE4frH+PTwTO6kH4ALRl59KBJlwAVnRkMSrB2kXDckT5RYDqoHxdnI2fQSn8V3LKWCC640caWgp5UG9UZJsjbbyXM2oJ4kLSMkSZr24J3RwFotPL/i5Rk9sRNWEZEzr+txPC7UcNmXe4mMyDA9eOpQP5PdmfNrKWykAjo/JmACtqdUcUE89cahzQV0QqHVSb5ncftzTD0qPg25SU8U43wg1fU0J4OC6oIoFBQFN6XmEu07Lr3ehuU06MtsB5PQ0r0Bhc3HXyooRtyLFXygi2qkIigPYD/Z6Tfx1jNgzn/8TaBEr6QhJlOU3E4mpCkgkWqKEj2VXdsL9lnfR6NKcQjJZU9OhZrvr/kwxT6uXVKohDkkIUYbJv38S76ch0/f88FG5gou90Yie3Cx0RivL3SCuQbREDHAZGnu3hQnqqx4formE16XNq7AsbAxW5BdWrfDTuDEC6aUUJFi5OrGhl0CU0jNxo3Q8fSmqIOExh4bdxwRhdVF4edDGAxqGKb0IEmTej6NCMofcIi9vN4RIKLTFDITgt5wUbmKdrOK+gc3nrsOQVHkXD2mM64mmG+n/c//S3w9AMtLy8ND4fQiWzH1aBSS3H9FI9zuImrgcS3r9d7BULbuJX1KsTfNc5oEdHeOuoO3KqvafUsMI6FoMFojZwpIQ=
+  password:
+    secure: CgXMNENtBSA+mJsk0cevxQlQY0I7k/ARcVYVPNKQnEvS0g7TthP6uOifYjPH6e4J9ThiGsp5sALTvGyzxhzBkWtuf1chdPsVgZu5yev1z5VsAV1+VGvUavF6BELIBA7YhPCXwcHLUWyUndzsY4Wwu6f2rhf+nnx8nogzY2QWRtFETYFynWESfewHc/o4pGVnf7h+MhCQcO/BipEyVZRVefMUFD0C5mS/9IV1wZ1dq7fx37yM7AusHfIeh/2FBH0lHvb4/Xh3u3MuE6XBGvnAKe9DMB/lAKhTbe2FAfJLumjuKASq4sHXkOjWk9ebvJxkEAYCY6drgLMtnOXVb8O/bA3geOkH4y91YzHG3MbzawPrvuflsTIL8jj3HkBCwbiaKjDiQxcksWxUvbKhfSt3h+dqghpHcnAeGwH7I42JqeVNLkPMo4lHxQRQRG+HAbRAOSe8gwVyVXoVxHz2VrHe6Qmg1xpVQD0WMcc/l0kuQMsXHjkOU7Eh0QRDPFeNzpMlbvE2wV2TOhevWC1xQ0h6og5DWYpq9BeIQUw87qm/+ds6M5FoSpNeyC85UvZ2XEsQoapKTft2qa9Uvpb2jq9hwy9Kgcet8p/yNX3oZp8ZPt7h12iTSNlFJrgxKnHNrL2PVBmaHLBUhR6D+NaB+szamMRXyxzAaUrVRVQxi5rW2dE=
+  site: fastflex.azurewebsites.net
